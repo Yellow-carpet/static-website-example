@@ -3,7 +3,6 @@ pipeline {
     environment {
         IMAGE_NAME = "staticwebserver"
         IMAGE_TAG = "ajc-2.0"
-        STAGING = "sofiane-ajc-staticwebserver-staging-env"
         PRODUCTION = "sofiane-ajc-staticwebserver-prod-env"
         CONTAINER_NAME = "staticwebserver_container"
         EC2_PRODUCTION_HOST = "34.235.138.52"
@@ -71,10 +70,15 @@ pipeline {
                         }
                     }
                 }
+             script{
+                 if (currentBuild.result == "SUCCESS") {
+                     slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                 }
+                 else {
+                     slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")'
+                 }
+             }
          }
-
-
-      
-    }
-
+        
+    
 }
