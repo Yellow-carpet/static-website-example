@@ -76,7 +76,6 @@ pipeline {
                     }
                     else {
                         slackSend (color: '#FFFF00', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-                        githubNotify credentialsId: 'github_notification', description: 'This is an example', status: 'Fail'
                     }
                 }
             }
